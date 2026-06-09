@@ -1,0 +1,36 @@
+# Smithery deployment config for the Inflectiv MCP server (stdio).
+# Reference: https://smithery.ai/docs/build/project-config/smithery.yaml
+# Verify field names against current Smithery docs before deploying.
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - apiKey
+    properties:
+      apiKey:
+        type: string
+        title: Inflectiv API Key
+        description: API key scoped to a dataset (starts with inf_). Create one from any dataset page in the dashboard.
+      baseUrl:
+        type: string
+        title: API Base URL
+        description: Optional. Override the API URL (self-hosted or local dev).
+        default: https://app.inflectiv.ai/api/platform
+      walletPrivateKey:
+        type: string
+        title: EVM Wallet Private Key (x402)
+        description: Optional. EVM wallet private key to pay per-request with USDC on Base via x402 when credits run out.
+  commandFunction: |
+    (config) => ({
+      command: 'node',
+      args: ['dist/index.js'],
+      env: Object.assign(
+        { INFLECTIV_API_KEY: config.apiKey },
+        config.baseUrl ? { INFLECTIV_BASE_URL: config.baseUrl } : {},
+        config.walletPrivateKey ? { INFLECTIV_WALLET_PRIVATE_KEY: config.walletPrivateKey } : {}
+      )
+    })
+build:
+  dockerfile: Dockerfile
+  dockerBuildPath: .

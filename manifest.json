@@ -1,0 +1,166 @@
+{
+  "manifest_version": "0.1",
+  "name": "inflectiv",
+  "display_name": "Inflectiv",
+  "version": "1.1.0",
+  "description": "MCP server for the Inflectiv AI platform — manage agents, datasets, files, and webhooks from Claude Desktop or Claude Code",
+  "author": {
+    "name": "Inflectiv"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inflectiv/inflectiv-mcp-server"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/dist/index.js"],
+      "env": {
+        "INFLECTIV_API_KEY": "${user_config.api_key}",
+        "INFLECTIV_BASE_URL": "${user_config.base_url}",
+        "INFLECTIV_WALLET_PRIVATE_KEY": "${user_config.wallet_private_key}"
+      }
+    }
+  },
+  "user_config": {
+    "api_key": {
+      "type": "string",
+      "title": "Inflectiv API Key",
+      "description": "API key scoped to a dataset (starts with inf_). Create one from any dataset page in the dashboard.",
+      "sensitive": true,
+      "required": true
+    },
+    "base_url": {
+      "type": "string",
+      "title": "API Base URL",
+      "description": "Override API URL (for self-hosted or local dev)",
+      "required": false,
+      "default": "https://app.inflectiv.ai/api/platform"
+    },
+    "wallet_private_key": {
+      "type": "string",
+      "title": "EVM Wallet Private Key (x402)",
+      "description": "EVM wallet private key for x402 crypto payments. When set and credits are 0, pays per-request with USDC on Base.",
+      "sensitive": true,
+      "required": false
+    }
+  },
+  "tools": [
+    {
+      "name": "inflectiv_list_agents",
+      "description": "List all agents that have the API key's dataset attached. Free."
+    },
+    {
+      "name": "inflectiv_create_agent",
+      "description": "Create a new AI agent. Costs 5 credits."
+    },
+    {
+      "name": "inflectiv_get_agent",
+      "description": "Get details of a specific agent. Free."
+    },
+    {
+      "name": "inflectiv_update_agent_config",
+      "description": "Update an agent's configuration (personality, instructions, model, temperature). Costs 2 credits."
+    },
+    {
+      "name": "inflectiv_chat_with_agent",
+      "description": "Send a message to an agent and get a RAG-enabled, multi-turn response. Costs 1 credit."
+    },
+    {
+      "name": "inflectiv_list_agent_datasets",
+      "description": "List all datasets attached to an agent. Free."
+    },
+    {
+      "name": "inflectiv_attach_dataset",
+      "description": "Attach a dataset to an agent in read_only or self_learning mode. Free."
+    },
+    {
+      "name": "inflectiv_update_dataset_mode",
+      "description": "Update the mode (read_only or self_learning) of a dataset attached to an agent. Free."
+    },
+    {
+      "name": "inflectiv_list_datasets",
+      "description": "List datasets accessible via this API key. Free."
+    },
+    {
+      "name": "inflectiv_create_dataset",
+      "description": "Create a new dataset. Requires a global API key."
+    },
+    {
+      "name": "inflectiv_clone_dataset",
+      "description": "Clone an accessible dataset into the user's account. Requires a global API key."
+    },
+    {
+      "name": "inflectiv_update_dataset",
+      "description": "Update dataset name, description, and/or instructions. Owner only. Free."
+    },
+    {
+      "name": "inflectiv_reindex_dataset",
+      "description": "Reindex dataset vectors after bulk changes. Costs 2 credits."
+    },
+    {
+      "name": "inflectiv_search_dataset",
+      "description": "Semantic search across a dataset's knowledge base. Costs 1 credit."
+    },
+    {
+      "name": "inflectiv_batch_search",
+      "description": "Run up to 20 semantic searches against a single dataset. Costs 1 credit per query."
+    },
+    {
+      "name": "inflectiv_cross_query",
+      "description": "Run one query against multiple accessible datasets. Requires a global API key + advanced tier. Costs 1 credit per dataset."
+    },
+    {
+      "name": "inflectiv_write_intelligence",
+      "description": "Write a single intelligence entry to a dataset (auto-embedded, deduplicated). Costs 1 credit (0 if duplicate)."
+    },
+    {
+      "name": "inflectiv_batch_write_intelligence",
+      "description": "Write up to 50 intelligence entries to a dataset. Costs 1 credit per new entry; duplicates are free."
+    },
+    {
+      "name": "inflectiv_list_intelligence",
+      "description": "List intelligence entries in a dataset with filtering and pagination. Free."
+    },
+    {
+      "name": "inflectiv_list_files",
+      "description": "List files (knowledge sources) in a dataset. Free."
+    },
+    {
+      "name": "inflectiv_get_file",
+      "description": "Get details and processing status of a specific file. Free."
+    },
+    {
+      "name": "inflectiv_upload_file",
+      "description": "Upload a local file to a dataset as a knowledge source. Costs 5 credits base + 1/MB over 5MB."
+    },
+    {
+      "name": "inflectiv_reprocess_file",
+      "description": "Reprocess a previously uploaded file after a processing failure. Costs 5 credits."
+    },
+    {
+      "name": "inflectiv_list_knowledge_sources",
+      "description": "List ALL knowledge sources in a dataset (files, URLs, manual text, AI-generated). Free."
+    },
+    {
+      "name": "inflectiv_register_webhook",
+      "description": "Register an HTTPS webhook to receive event notifications. Max 10 per user. Free."
+    },
+    {
+      "name": "inflectiv_list_webhooks",
+      "description": "List all registered webhooks. Free."
+    },
+    {
+      "name": "inflectiv_test_webhook",
+      "description": "Send a test event to a registered webhook to verify it receives payloads. Free."
+    }
+  ],
+  "compatibility": {
+    "runtimes": {
+      "node": ">=18"
+    }
+  }
+}

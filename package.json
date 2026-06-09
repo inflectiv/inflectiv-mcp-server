@@ -1,0 +1,42 @@
+{
+  "name": "@inflectiv-ai/inflectiv-mcp",
+  "version": "1.1.0",
+  "description": "MCP server for the Inflectiv AI platform — manage agents, datasets, files, and webhooks from Claude Desktop or Claude Code",
+  "type": "module",
+  "bin": {
+    "inflectiv-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.5",
+    "@x402/evm": "^2.14.0",
+    "@x402/fetch": "^2.14.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.3",
+    "viem": "^2.48.4"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "mcp",
+    "inflectiv",
+    "ai",
+    "chatbot",
+    "claude",
+    "model-context-protocol"
+  ],
+  "license": "MIT"
+}

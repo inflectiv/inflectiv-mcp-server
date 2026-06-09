@@ -1,0 +1,41 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
+  "name": "io.github.inflectiv/inflectiv-mcp-server",
+  "description": "MCP server for the Inflectiv AI platform — manage agents, datasets, files, and webhooks from Claude Desktop or Claude Code",
+  "repository": {
+    "url": "https://github.com/inflectiv/inflectiv-mcp-server",
+    "source": "github"
+  },
+  "version": "1.1.0",
+  "packages": [
+    {
+      "registry_type": "npm",
+      "identifier": "@inflectiv-ai/inflectiv-mcp",
+      "version": "1.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environment_variables": [
+        {
+          "name": "INFLECTIV_API_KEY",
+          "description": "API key scoped to a dataset (starts with `inf_`). Create one from any dataset page in the dashboard.",
+          "is_required": true,
+          "is_secret": true
+        },
+        {
+          "name": "INFLECTIV_BASE_URL",
+          "description": "Override API URL (for self-hosted or local dev)",
+          "is_required": false,
+          "is_secret": false,
+          "default": "https://app.inflectiv.ai/api/platform"
+        },
+        {
+          "name": "INFLECTIV_WALLET_PRIVATE_KEY",
+          "description": "EVM wallet private key for x402 crypto payments. When set and credits are 0, pays per-request with USDC on Base.",
+          "is_required": false,
+          "is_secret": true
+        }
+      ]
+    }
+  ]
+}

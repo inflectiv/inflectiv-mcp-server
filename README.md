@@ -64,6 +64,10 @@ claude mcp add inflectiv -e INFLECTIV_API_KEY=inf_your_key_here -- npx -y @infle
 
 Or edit `.mcp.json` in your project root with the same `mcpServers` block as above.
 
+### Cline
+
+In the Cline panel, open **MCP** → **Edit Configuration**, and add the same `mcpServers` block as above to `cline_mcp_settings.json`. Cline can also do this for you: give it this repository's URL and it will follow [`llms-install.md`](llms-install.md).
+
 ### Cursor / Windsurf / Other MCP Clients
 
 Any MCP-compatible client works. Run `npx -y @inflectiv-ai/inflectiv-mcp` with the `INFLECTIV_API_KEY` environment variable set.
